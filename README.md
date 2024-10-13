@@ -6,7 +6,7 @@ The application would also provide customer support representatives with a tool 
 - Python (3.11)
 - Django (>=4.1)
 - MySQL
-- UIKit (https://getuikit.com)
+
 
 ## Instructions to run
 - Default DB is in MySQL, thus for running and migrating first time, make sure yo have XAMPP or any server configuration supporting MySQL installed, then run: `python manage.py makemigrations` and then `python manage.py migrate`
