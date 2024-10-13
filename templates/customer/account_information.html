@@ -1,0 +1,73 @@
+{% extends '../header.html' %}
+{% block content %}
+
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body">
+            <div class="uk-child-1-3 uk-text-center" uk-grid>
+                <div>
+                    <a href="/csr/customer/service_request">All Service Request</a>
+                </div>
+                <div>
+                    <a href="/csr/customer/account_info">Account Information</a>
+                </div>
+                <div>
+                    <a href="/csr/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-flex" style="width: 90%; text-align: center; margin-top: 3%; padding: 2%;">
+        <label style="font-size: 120%; font-weight: 600; color: rgb(0, 116, 161);">
+            <a href="/csr/customer/service_request"><span uk-icon="chevron-left"></span></a>
+            &nbsp;&nbsp;&nbsp;
+            Account Information<br/>
+        </label>    
+    </div>
+
+    
+    <div class="uk-child-width-1-4" uk-grid style="padding: 2%;">
+        <div>
+            First Name:<br/>
+            <label style="font-size: 170%;">{{ request.user.first_name }}</label>
+        </div>
+        <div>
+            Last Name:<br/>
+            <label style="font-size: 170%;">{{ request.user.last_name }}</label>
+        </div>
+        <div>
+            Email:<br/>
+            <label style="font-size: 170%;">{{ request.user.email }}</label>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="uk-flex" style="width: 90%; text-align: center; padding: 1%;">
+        <label style="font-size: 120%; font-weight: 600; color: rgb(0, 116, 161);">
+            Service Request applications
+        </label>    
+    </div>
+
+
+    <div class="uk-card uk-card-secondary" style="margin-right: 2%; margin-left: 2%;">
+        <div class="uk-child-width-1-3" uk-grid style="padding: 3%;">
+        
+            <div>
+                Pending: <br/>
+                <label style="font-size: 170%;">{{ sr_info_per_account.pending_count }}</label>
+            </div>
+            <div>
+                Resolved: <br/>
+                <label style="font-size: 170%;">{{ sr_info_per_account.resolved_count }}</label>
+            </div>
+            <div>
+                Paid: <br/>
+                <label style="font-size: 170%;">{{ sr_info_per_account.paid_count }}</label>
+            </div>
+        
+        </div>
+    </div>
+    
+
+{% endblock content %}

@@ -1,0 +1,93 @@
+{% extends '../header.html' %}
+{% block content %}
+
+<div>
+    <div class="uk-card uk-card-primary uk-card-body">
+        <div class="uk-child-1-3 uk-text-center" uk-grid>
+            <div>
+                <a href="/csr/customer/service_request">All Service Request</a>
+            </div>
+            <div>
+                <a href="/csr/customer/account_info">Account Information</a>
+            </div>
+            <div>
+                <a href="/csr/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
+        <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+            <div style="text-align: left;">
+                <h2><u>All Service Requests</u></h2>
+                <label>Total requests: {{ sr_count }} requests</label>
+            </div>
+            <div style="text-align: right;">
+                <button class="uk-button uk-button-primary" type="button" uk-toggle="target: #gas-util-customer-create">New Service Request</button>
+            </div>
+            <div id="gas-util-customer-create" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body">
+                    <h2 class="uk-modal-title">Add Customer</h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <table style="width: 100%">
+                            <tr>
+                                <td colspan="2">
+                                    Type of Service:<br/>
+                                    <select class="uk-select" name="type_of_service">
+                                        <option>Installation</option>
+                                        <option>Gas Pressure Check</option>
+                                        <option>Meter Check</option>
+                                        <option>Re-Installation</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Description of service:<br/><textarea class="uk-textarea" placeholder="Eg: Need a new meter installation" name="service_request_details"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    Upload Files:<br/>
+                                    <div uk-form-custom>
+                                        <input type="file" name="sr_attachments" aria-label="Custom controls" multiple>
+                                        <button class="uk-button uk-button-secondary" type="button" tabindex="-1">Select</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                        <p class="uk-text-right">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                            <input class="uk-button uk-button-primary" type="submit" value="Add Request" name="create_customer">
+                        </p>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+
+    <div class="uk-child-width-1-3" uk-grid style="padding: 2%;">
+        {% for elem in service_requests %}
+            <div>
+                <div>
+                    <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
+                        <h5 class="uk-card-title">GUSR_00{{ elem.id }}</h5>
+                        {{ elem.customer_ref.unique_customer_tracking_id }}
+                        
+                        <a href="/csr/customer/service_request/{{ elem.id }}">
+                            <button class="uk-button uk-button-secondary">View More</button>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+
+
+{% endblock content %}

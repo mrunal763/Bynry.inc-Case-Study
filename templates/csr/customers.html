@@ -1,0 +1,77 @@
+{% extends '../header.html' %}
+{% block content %}
+
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body">
+            <div class="uk-child-1-3 uk-text-center" uk-grid>
+                <div>
+                    <a href="/csr/customers">Customers</a>
+                </div>
+                <div>
+                    <a href="/csr/srmanager">Service Requests</a>
+                </div>
+                <div>
+                    <a href="/csr/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-card uk-card-default uk-card-body" style="text-align: left;">
+        <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+            <div style="text-align: left;">
+                <h2><u>All Customers</u></h2>
+                <label>Total customers: {{ cust_count }} customers</label>
+            </div>
+            <div style="text-align: right;">
+                <button class="uk-button uk-button-primary" type="button" uk-toggle="target: #gas-util-customer-create">Add Customer</button>
+            </div>
+            <div id="gas-util-customer-create" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body">
+                    <h2 class="uk-modal-title">Add Customer</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <table style="width: 100%">
+                            <tr>
+                                <td>First name:<br/><input class="uk-input" type="text" name="first_name"></input></td>
+                                <td>Last name:<br/><input class="uk-input" type="text" name="last_name"></input></td>
+                            </tr>
+                            <tr>
+                                <td>Email:<br/><input class="uk-input" type="email" name="email"></input></td>
+                                <td>Password:<br/><input class="uk-input" type="password" name="password"></input></td>
+                            </tr>
+                        </table>
+                    
+                        <p class="uk-text-right">
+                            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                            <input class="uk-button uk-button-primary" type="submit" value="Create Customer" name="create_customer">
+                        </p>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="uk-child-width-1-3" uk-grid style="padding: 2%;">
+        {% for elem in customers %}
+            <div>
+                <div>
+                    <div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
+                        <h5 class="uk-card-title">{{ elem.customer_ref.first_name }} {{ elem.customer_ref.last_name }}</h5>
+                        <p>Is Active: {{ elem.customer_ref.is_active }}</p>
+                        <p>Service Requests<br/>
+                            <label style="font-size: 150%;">0</label>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+    
+
+
+{% endblock content %}

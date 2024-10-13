@@ -1,0 +1,43 @@
+{% extends 'header.html' %}
+{% block content %}
+
+    <center>
+
+        <div style="width: 70%; margin-top: 10%">
+
+            {% if auth_validated is False %}
+                <div class="uk-alert-danger" uk-alert>
+                    <a class="uk-alert-close" uk-close></a>
+                    <p>Either username or password is wrong. Please try again</p>
+                </div>
+            {% endif %}
+
+            <div class="uk-card uk-card-primary uk-card-hover uk-card-body uk-light">
+
+                <label>Login using customer/CSR credentials</label>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    <table style="width: 100%">
+                        <tr>
+                            <td>Email:</td>
+                            <td><input class="uk-input" name="email" type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td><input class="uk-input" name="password" type="password"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <br/>
+                                <input type="submit" class="uk-button uk-button-primary uk-width-1-1" name="submit">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </center>
+
+{% endblock content %}

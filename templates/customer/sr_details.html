@@ -1,0 +1,119 @@
+{% extends '../header.html' %}
+{% block content %}
+
+    <div>
+        <div class="uk-card uk-card-primary uk-card-body">
+            <div class="uk-child-1-3 uk-text-center" uk-grid>
+                <div>
+                    <a href="/csr/customer/service_request">All Service Request</a>
+                </div>
+                <div>
+                    <a href="/csr/customer/account_info">Account Information</a>
+                </div>
+                <div>
+                    <a href="/csr/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-flex" style="width: 90%; text-align: center; margin-top: 3%; padding: 2%;">
+        <label style="font-size: 120%; font-weight: 600; color: rgb(0, 116, 161);">
+            <a href="/csr/customer/service_request"><span uk-icon="chevron-left"></span></a>
+            &nbsp;&nbsp;&nbsp;
+            Service Request: GUSR_00{{ gas_util_specific_sr.id }}
+        </label>    
+    </div>
+
+    <hr>
+
+    <div class="uk-child-width-1-3" uk-grid style="padding: 3%;">
+        <div>
+            <label style="font-size: 100%">Type of Service</label><br/>
+            <label style="font-size: 130%">{{ gas_util_specific_sr.type_of_service }}</label><br/>
+        </div>
+        <div>
+            <label style="font-size: 100%">Service details</label><br/>
+            <label>{{ gas_util_specific_sr.service_request_details }}</label><br/>
+        </div>
+        <div>
+            <label style="font-size: 100%">Status</label><br/>
+            <label style="font-size: 130%">
+                {% if gas_util_specific_sr.status == 0 %}
+                    Pending
+                {% elif gas_util_specific_sr.status == 1 %}
+                    Resolved on {{ gas_util_specific_sr.resolved_on }}
+                {% else %}
+                    Paid on {{ gas_util_specific_sr.service_paid_on }}
+                {% endif %}
+            </label><br/>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="uk-flex" style="width: 90%; text-align: center; padding: 1%;">
+        <label style="font-size: 120%; font-weight: 600; color: rgb(0, 116, 161);">
+            Attachments
+        </label>    
+    </div>
+    <div class="uk-card uk-card-secondary" style="margin-right: 2%; margin-left: 2%;">
+        <div class="uk-child-width-1-3" uk-grid style="padding: 3%;">
+            {% for elem in gas_util_specific_sr_attachments %}
+            <div>
+                {{ elem.attachment.name }}<br/>
+                <a href="{{ elem.attachment.url }}"><button class="uk-button uk-button-primary">View File</button></a>
+            </div>
+            
+        {% endfor %}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="uk-flex" style="width: 90%; text-align: center; padding: 1%;">
+        <label style="font-size: 120%; font-weight: 600; color: rgb(0, 116, 161);">
+            Request Tracking
+        </label>    
+    </div>
+    <div class="uk-child-width-1-3" uk-grid style="padding: 3%;">
+        
+        {% if gas_util_specific_sr.status >= 0 %}
+        <div>
+            <div>
+                <div class="uk-card uk-card-primary uk-card-hover uk-card-body uk-light">
+                    <h3 class="uk-card-title"><span uk-icon="clock"></span> Request Placed</h3>
+                    <p>Placed at {{ gas_util_specific_sr.created_on }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+        {% if gas_util_specific_sr.status >= 1 %}
+        <div>
+            <div>
+                <div class="uk-card uk-card-primary uk-card-hover uk-card-body uk-light">
+                    <h3 class="uk-card-title"><span uk-icon="check"></span> Request Resolved</h3>
+                    <p>Resolved at {{ gas_util_specific_sr.resolved_on }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if gas_util_specific_sr.status >= 2 %}
+        <div>
+            <div>
+                <div class="uk-card uk-card-primary uk-card-hover uk-card-body uk-light">
+                    <h3 class="uk-card-title"><span uk-icon="file-text"></span> Request Paid</h3>
+                    <p>Paid at {{ gas_util_specific_sr.service_paid_on }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+
+
+{% endblock content %}
